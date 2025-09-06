@@ -20,6 +20,9 @@ spec:
         defaultBuckets: mlflow-artifacts
         service:
           type: ClusterIP
+        persistence:
+          enabled: false
+          
   syncPolicy:
     automated:
       prune: true
