@@ -4,19 +4,19 @@ metadata:
   name: mlflow
   namespace: infra-tools
 spec:
-  project: default
   destination:
     namespace: mlflow
     server: https://kubernetes.default.svc
+  project: default
   source:
     repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
-    targetRevision: 1.6.2
+    targetRevision: 0.6.2
     helm:
       valuesObject:
         image:
           repository: bitnami/mlflow
-          tag: 3.3.1
+          tag: 2.10.1
 
         backendStore:
           postgres:
