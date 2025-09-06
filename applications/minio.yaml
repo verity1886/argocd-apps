@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: infra-tools
+spec:
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: minio
+    targetRevision: 14.7.15
+    helm:
+      releaseName: minio
+      parameters:
+        - name: defaultBuckets
+          value: "mlflow-artifacts"
+        - name: mode
+          value: standalone
+        - name: resources.requests.memory
+          value: 256Mi
+        - name: resources.requests.cpu
+          value: 100m
+  destination:
+    namespace: mlflow
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}
