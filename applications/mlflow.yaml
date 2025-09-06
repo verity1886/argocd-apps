@@ -16,7 +16,7 @@ spec:
       valuesObject:
         image:
           repository: bitnami/mlflow
-          tag: v2.15.1
+          tag: 1.5.7
 
         backendStore:
           postgres:
