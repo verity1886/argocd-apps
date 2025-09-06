@@ -15,8 +15,8 @@ spec:
     helm:
       valuesObject:
         image:
-          repository: ghcr.io/mlflow/mlflow
-          tag: v2.22.2
+          repository: mlflow/mlflow # Змінено на офіційний образ Docker Hub
+          tag: 2.10.2 # Використано стабільний тег
 
         backendStore:
           postgres:
