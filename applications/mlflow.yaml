@@ -21,7 +21,7 @@ spec:
         backendStore:
           postgres:
             enabled: true
-            host: mlflow-postgres.mlflow.svc.cluster.local
+            host: postgresql.mlflow.svc.cluster.local
             port: 5432
             database: mlflow
             user: mlflow
