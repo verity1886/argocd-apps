@@ -14,40 +14,35 @@ spec:
     targetRevision: 1.6.2
     helm:
       valuesObject:
-        # Налаштування образу
         image:
           repository: ghcr.io/mlflow/mlflow
-          tag: 3.3.2
+          tag: 2.10.2 # Виправлено на робочий, існуючий тег образу
 
-        # Налаштування Backend Store (PostgreSQL)
         backendStore:
           postgres:
-            enabled: true # Активуємо використання PostgreSQL
+            enabled: true
             host: mlflow-postgres.mlflow.svc.cluster.local
             port: 5432
             database: mlflow
             user: mlflow
-            password: mlflowpass # Використовуємо пароль
+            password: mlflowpass
 
-        # Налаштування Artifact Store (MinIO)
         artifactRoot:
           s3:
-            enabled: true # Активуємо використання S3
+            enabled: true
             bucket: mlflow-artifacts
-            awsAccessKeyId: minio # Ключ доступу
-            awsSecretAccessKey: minio123 # Секретний ключ
+            awsAccessKeyId: minio
+            awsSecretAccessKey: minio123
 
-        # Налаштування сервісу
         service:
           type: ClusterIP
           port: 5000
 
-        # Налаштування змінних оточення для MLflow
         extraEnvVars:
           MLFLOW_S3_ENDPOINT_URL: http://minio.mlflow.svc.cluster.local:9000
           AWS_ACCESS_KEY_ID: minio
           AWS_SECRET_ACCESS_KEY: minio123
-          AWS_REGION: us-east-1 # Додайте регіон, MinIO ігнорує його, але MLflow вимагає
+          AWS_REGION: us-east-1
 
   syncPolicy:
     automated:
