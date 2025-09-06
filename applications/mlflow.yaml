@@ -4,19 +4,19 @@ metadata:
   name: mlflow
   namespace: infra-tools
 spec:
+  project: default
   destination:
     namespace: mlflow
     server: https://kubernetes.default.svc
-  project: default
   source:
     repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
-    targetRevision: 0.6.2
+    targetRevision: 1.6.2
     helm:
       valuesObject:
         image:
-          repository: ghcr.io/community-charts/mlflow
-          tag: latest
+          repository: ghcr.io/mlflow/mlflow
+          tag: v2.22.0
 
         backendStore:
           postgres:
@@ -43,6 +43,7 @@ spec:
           AWS_ACCESS_KEY_ID: minio
           AWS_SECRET_ACCESS_KEY: minio123
           AWS_REGION: us-east-1
+
   syncPolicy:
     automated:
       prune: true
