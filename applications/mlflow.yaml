@@ -11,12 +11,12 @@ spec:
   source:
     repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
-    targetRevision: 0.8.4
+    targetRevision: 1.6.2 # Оновлено до найновішої версії
     helm:
       valuesObject:
         image:
           repository: ghcr.io/mlflow/mlflow
-          tag: 2.10.0
+          tag: 3.3.2 # Відповідає версії додатка чарту
 
         backendStore:
           database: postgresql
@@ -38,7 +38,7 @@ spec:
         service:
           type: ClusterIP
           port: 5000
-          
+
   syncPolicy:
     automated:
       prune: true
