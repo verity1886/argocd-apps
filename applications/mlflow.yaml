@@ -11,29 +11,35 @@ spec:
   source:
     repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
-    targetRevision: 1.6.2 # Оновлено до найновішої версії
+    targetRevision: 1.6.2 
     helm:
       valuesObject:
         image:
           repository: ghcr.io/mlflow/mlflow
-          tag: 3.3.2 # Відповідає версії додатка чарту
+          tag: 3.3.2
 
-        backendStore:
-          database: postgresql
-          postgres:
+        # Нова структура для налаштування сховищ
+        backend:
+          # Встановлює тип бази даних
+          type: postgresql
+          # Вказує, що потрібно підключитися до існуючої бази даних
+          external:
             host: mlflow-postgres.mlflow.svc.cluster.local
             port: 5432
             database: mlflow
             user: mlflow
             password: mlflowpass
 
-        artifactStore:
-          defaultArtifactRoot: s3://mlflow-artifacts
-          s3:
-            endpointUrl: http://minio.mlflow.svc.cluster.local:9000
-            bucketName: mlflow-artifacts
-            accessKey: minio
-            secretKey: minio123
+        artifact:
+          # Встановлює тип сховища артефактів
+          type: s3
+          # Вказує, що потрібно підключитися до існуючого S3-сумісного сховища
+          external:
+            bucket: mlflow-artifacts
+            s3:
+              endpointUrl: http://minio.mlflow.svc.cluster.local:9000
+              accessKey: minio
+              secretKey: minio123
 
         service:
           type: ClusterIP
