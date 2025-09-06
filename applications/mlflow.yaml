@@ -16,7 +16,7 @@ spec:
       valuesObject:
         image:
           repository: ghcr.io/mlflow/mlflow
-          tag: v2.20.1
+          tag: v2.15.1
 
         backendStore:
           postgres:
