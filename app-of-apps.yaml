@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/verity1886/argocd-apps.git
     targetRevision: HEAD
-    path: argocd/applications
+    path: applications
     directory:
       recurse: true
   destination:
