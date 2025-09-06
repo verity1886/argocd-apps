@@ -16,7 +16,7 @@ spec:
       valuesObject:
         image:
           repository: ghcr.io/mlflow/mlflow
-          tag: 2.10.2 # Виправлено на робочий, існуючий тег образу
+          tag: v2.22.2
 
         backendStore:
           postgres:
