@@ -15,8 +15,20 @@ spec:
     helm:
       valuesObject:
         image:
-          repository: mlflow/mlflow # Змінено на офіційний образ Docker Hub
-          tag: 2.10.2 # Використано стабільний тег
+          repository: mlflow/mlflow
+          tag: 2.22.2
+
+        # Install psycopg2 on top of the MLflow image
+        command: ["/bin/bash"]
+        args:
+          - -c
+          - |
+            pip install psycopg2-binary
+            exec mlflow server \
+              --backend-store-uri postgresql://mlflow:mlflowpass@mlflow-postgres.mlflow.svc.cluster.local:5432/mlflow \
+              --default-artifact-root s3://mlflow-artifacts \
+              --host 0.0.0.0 \
+              --port 5000
 
         backendStore:
           postgres:
