@@ -15,7 +15,7 @@ spec:
     helm:
       valuesObject:
         image:
-          repository: ghcr.io/mlflow/mlflow
+          repository: bitnami/mlflow
           tag: v2.15.1
 
         backendStore:
