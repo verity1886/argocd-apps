@@ -1,29 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres
-  namespace: infra-tools
+  name: mlflow-postgres
 spec:
-  project: default
-  source:
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: postgresql
-    targetRevision: 15.5.12
-    helm:
-      releaseName: postgres
-      parameters:
-        - name: auth.database
-          value: mlflow
-        - name: auth.username
-          value: mlflow
-        - name: auth.password
-          value: mlflow123
-        - name: resources.requests.memory
-          value: 256Mi
-        - name: resources.requests.cpu
-          value: 100m
-  destination:
-    namespace: mlflow
-    server: https://kubernetes.default.svc
-  syncPolicy:
-    automated: {}
+  destination:
+    namespace: infra-tools
+    server: https://kubernetes.default.svc
+  project: mlops
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: postgresql
+    targetRevision: 12.5.6
+    helm:
+      valuesObject:
+        auth:
+          username: mlflow
+          password: mlflowpass
+          database: mlflow
+        primary:
+          persistence:
+            enabled: true
+            size: 1Gi
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
