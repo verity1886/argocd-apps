@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mlflow-stack
+  namespace: infra-tools
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/verity1886/argocd-app-of-apps.git
+    targetRevision: HEAD
+    path: argocd/applications
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  directory:
+    recurse: true
