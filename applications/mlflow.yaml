@@ -11,39 +11,43 @@ spec:
   source:
     repoURL: https://community-charts.github.io/helm-charts
     chart: mlflow
-    targetRevision: 1.6.2 
+    targetRevision: 1.6.2
     helm:
       valuesObject:
+        # Налаштування образу
         image:
           repository: ghcr.io/mlflow/mlflow
           tag: 3.3.2
 
-        # Нова структура для налаштування сховищ
-        backend:
-          # Встановлює тип бази даних
-          type: postgresql
-          # Вказує, що потрібно підключитися до існуючої бази даних
-          external:
+        # Налаштування Backend Store (PostgreSQL)
+        backendStore:
+          postgres:
+            enabled: true # Активуємо використання PostgreSQL
             host: mlflow-postgres.mlflow.svc.cluster.local
             port: 5432
             database: mlflow
             user: mlflow
-            password: mlflowpass
+            password: mlflowpass # Використовуємо пароль
 
-        artifact:
-          # Встановлює тип сховища артефактів
-          type: s3
-          # Вказує, що потрібно підключитися до існуючого S3-сумісного сховища
-          external:
+        # Налаштування Artifact Store (MinIO)
+        artifactRoot:
+          s3:
+            enabled: true # Активуємо використання S3
             bucket: mlflow-artifacts
-            s3:
-              endpointUrl: http://minio.mlflow.svc.cluster.local:9000
-              accessKey: minio
-              secretKey: minio123
+            awsAccessKeyId: minio # Ключ доступу
+            awsSecretAccessKey: minio123 # Секретний ключ
 
+        # Налаштування сервісу
         service:
           type: ClusterIP
           port: 5000
+
+        # Налаштування змінних оточення для MLflow
+        extraEnvVars:
+          MLFLOW_S3_ENDPOINT_URL: http://minio.mlflow.svc.cluster.local:9000
+          AWS_ACCESS_KEY_ID: minio
+          AWS_SECRET_ACCESS_KEY: minio123
+          AWS_REGION: us-east-1 # Додайте регіон, MinIO ігнорує його, але MLflow вимагає
 
   syncPolicy:
     automated:
